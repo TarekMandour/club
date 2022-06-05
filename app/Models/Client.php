@@ -13,10 +13,10 @@ class Client extends Model
     protected $guard = 'admin';
     protected $guarded = [];
 
-    protected $fillable = [
-        'name', 'membership_no ', 'national_no ', 'email', 'phone', 'password', 'photo', 'is_active',
-        'jop', 'birth_date', 'register_date', 'type', 'parent_id'
-    ];
+//    protected $fillable = [
+//        'name', 'membership_no ', 'national_no ', 'email', 'phone', 'password', 'photo', 'is_active',
+//        'jop', 'birth_date', 'register_date', 'type', 'parent_id'
+//    ];
 
     protected $hidden = [
         'password', 'remember_token',
@@ -52,6 +52,14 @@ class Client extends Model
         return $this->hasMany(ClientNotification::class, 'client_id');
     }
 
+    public function setPhotoAttribute($image)
+    {
+        if (is_file($image)) {
+            $img_name = time() . uniqid() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/clients'), $img_name);
+            $this->attributes['photo'] = $img_name;
+        }
+    }
     public function getPhotoAttribute($image)
     {
         if (!empty($image)) {
@@ -60,4 +68,10 @@ class Client extends Model
         return "";
     }
 
+    public function setPasswordAttribute($password)
+    {
+        if (!empty($password)) {
+            $this->attributes['password'] = bcrypt($password);
+        }
+    }
 }

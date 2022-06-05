@@ -37,7 +37,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth
         return view('admin/page/button');
     });
 
-
+//start categories
     Route::get('/category', 'CategoryController@index');
     Route::get('category_datatable', 'CategoryController@datatable')->name('category.datatable.data');
     Route::get('delete-category', 'CategoryController@destroy');
@@ -50,7 +50,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth
         return view('admin/category/button');
     });
 
-
+//start offers
     Route::get('/offer', 'OfferController@index');
     Route::get('offer_datatable', 'OfferController@datatable')->name('offer.datatable.data');
     Route::get('delete-offer', 'OfferController@destroy');
@@ -64,6 +64,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth
     });
 
 
+//    start posts
     Route::get('/post', 'PostController@index');
     Route::get('post_datatable', 'PostController@datatable')->name('post.datatable.data');
     Route::get('delete-post', 'PostController@destroy');
@@ -76,14 +77,29 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth
         return view('admin/post/button');
     });
 
+//    start posts images
     Route::get('/post-image/{post_id}', 'PostImagesController@index');
     Route::get('post_image_datatable/{post_id}', 'PostImagesController@datatable')->name('image.post.datatable.data');
     Route::get('delete-post-image', 'PostImagesController@destroy');
     Route::get('create-post-image/{post_id}', 'PostImagesController@create');
     Route::post('store-post-image', 'PostImagesController@store');
-
-
     Route::get('add-post-image-button/{id}', 'PostImagesController@button');
+
+
+    Route::get('/client', 'ClientController@index');
+    Route::get('client_datatable', 'ClientController@datatable')->name('client.datatable.data');
+    Route::get('delete-client', 'ClientController@destroy');
+    Route::get('show-client/{id}', 'ClientController@show');
+    Route::get('create-client', 'ClientController@create');
+    Route::post('store-client', 'ClientController@store');
+    Route::get('edit-client/{id}', 'ClientController@edit');
+    Route::post('update-client', 'ClientController@update');
+    Route::get('add-client-button', function () {
+        return view('admin/client/button');
+    });
+
+    Route::get('follower_datatable/{parent_id}', 'ClientController@datatable_followers')->name('follower.datatable.data');
+
 
 
 });
