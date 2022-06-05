@@ -8,10 +8,13 @@ use Illuminate\Support\Facades\App;
 class Category extends Model
 {
 
+    protected $guarded = [];
+
     public function Category()
     {
         return $this->belongsTo(Category::class, 'parent');
     }
+
 
     public function subCategory()
     {
@@ -24,6 +27,15 @@ class Category extends Model
             return asset('public/uploads/categories') . '/' . $image;
         }
         return "";
+    }
+
+    public function setPhotoAttribute($image)
+    {
+        if (is_file($image)) {
+            $img_name = time() . uniqid() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/categories'), $img_name);
+            $this->attributes['photo'] = $img_name;
+        }
     }
 
     public function getAppendNameAttribute()

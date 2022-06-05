@@ -34,6 +34,18 @@ use Illuminate\Support\Facades\Route;
         Route::get('add-page-button', function () {return view('admin/page/button');});
 
 
+
+        Route::get('/category', 'CategoryController@index');
+        Route::get('category_datatable', 'CategoryController@datatable')->name('category.datatable.data');
+        Route::get('delete-category', 'CategoryController@destroy');
+        Route::get('show-category/{id}', 'CategoryController@show');
+        Route::get('create-category', 'CategoryController@create');
+        Route::post('store-category', 'CategoryController@store');
+        Route::get('edit-category/{id}', 'CategoryController@edit');
+        Route::post('update-category', 'CategoryController@update');
+        Route::get('add-category-button', function () {return view('admin/category/button');});
+
+
     });
 
 

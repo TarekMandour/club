@@ -23,6 +23,7 @@ class PageController extends Controller
 
         return view('admin.page.index');
     }
+
     public function datatable(Request $request)
     {
         $data = Page::orderBy('id', 'asc');
@@ -65,15 +66,15 @@ class PageController extends Controller
     }
 
     public function store(Request $request)
-    { 
+    {
         $rule = [
             'title' => 'required|string',
             'content' => 'required|string',
         ];
         $validate = Validator::make($request->all(), $rule);
-        if ($validate->fails()) { 
+        if ($validate->fails()) {
             return redirect()->back()->with('message', $validate->messages()->first())->with('status', 'error');
-        }        
+        }
 
         $data = Page::create([
             'title' => $request->title,
@@ -108,7 +109,7 @@ class PageController extends Controller
             'content' => 'required|string',
         ];
         $validate = Validator::make($request->all(), $rule);
-        if ($validate->fails()) { 
+        if ($validate->fails()) {
             return redirect()->back()->with('message', $validate->messages()->first())->with('status', 'error');
         }
 
@@ -116,14 +117,14 @@ class PageController extends Controller
 
         if ($row->photo) {
             $pathinfo = pathinfo($row->photo);
-            $ori_image =  $pathinfo['filename'].'.'.$pathinfo['extension'];
+            $ori_image = $pathinfo['filename'] . '.' . $pathinfo['extension'];
         } else {
             $ori_image = NULL;
         }
 
         if ($row->photo2) {
             $pathinfo2 = pathinfo($row->photo2);
-             $ori_image2 =  $pathinfo2['filename'].'.'.$pathinfo2['extension'];
+            $ori_image2 = $pathinfo2['filename'] . '.' . $pathinfo2['extension'];
         } else {
             $ori_image2 = NULL;
         }
@@ -153,16 +154,16 @@ class PageController extends Controller
             'meta_description' => $request->meta_description,
             'photo' => $photo,
             'photo2' => $photo2,
-        ]);        
+        ]);
 
         return redirect('admin/pages')->with('message', 'تم التعديل بنجاح')->with('status', 'success');
     }
 
     public function destroy(Request $request)
-    {   
+    {
 
-        try{
-            Page::whereIn('id',$request->id)->delete();
+        try {
+            Page::whereIn('id', $request->id)->delete();
         } catch (\Exception $e) {
             return response()->json(['message' => 'Failed']);
         }
