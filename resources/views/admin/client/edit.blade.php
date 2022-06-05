@@ -38,6 +38,12 @@
                             </li>
                             <!--end:::Tab item-->
                             <!--begin:::Tab item-->
+                            <li class="nav-item">
+                                <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
+                                   href="#Cards">الكروت</a>
+                            </li>
+                            <!--end:::Tab item-->
+                            <!--begin:::Tab item-->
                     @endif
                     <!--end:::Tab item-->
                     </ul>
@@ -298,6 +304,47 @@
                                                 <th class="min-w-125px">رقم العضوية</th>
                                                 <th class="min-w-125px">الوظيفة</th>
                                                 <th class="min-w-125px">الحالة</th>
+                                                <th class="min-w-125px">تاريخ الانشاء</th>
+                                                <th class=" min-w-100px">الاجراءات</th>
+                                            </tr>
+                                            <!--end::Table row-->
+                                            </thead>
+                                            <!--end::Table head-->
+                                            <!--begin::Table body-->
+
+
+                                            <!--end::Table body-->
+                                        </table>
+                                    </div>
+                                    <!--end::Card header-->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="Cards" role="tab-panel">
+                            <div class="d-flex flex-column gap-7 gap-lg-10">
+                                <div class="card card-flush py-4">
+                                    <!--begin::Card body-->
+                                    <div class="card-body pt-0">
+                                        <table class="table align-middle table-row-dashed fs-4 gy-5"
+                                               id="data_table_cards">
+                                            <!--begin::Table head-->
+                                            <thead>
+                                            <!--begin::Table row-->
+
+                                            <tr class="text-start text-muted fw-bolder fs-5 text-uppercase gs-0">
+                                                <th class="w-10px pe-2">
+                                                    <div
+                                                        class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                                                        <input class="form-check-input" type="checkbox"
+                                                               data-kt-check="true"
+                                                               data-kt-check-target="#data_table .form-check-input"
+                                                               value=""/>
+                                                    </div>
+                                                </th>
+
+                                                <th class="min-w-125px">اسم الكارت</th>
+
                                                 <th class="min-w-125px">تاريخ الانشاء</th>
                                                 <th class=" min-w-100px">الاجراءات</th>
                                             </tr>
@@ -638,6 +685,55 @@
                 url: "{{ URL::to('admin/add-client-button')}}",
                 success: function (data) {
                     $('.add_button').append(data);
+                },
+                dataType: 'html'
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            var table = $('#data_table_cards').DataTable({
+                processing: true,
+                serverSide: true,
+                autoWidth: false,
+                responsive: true,
+                aaSorting: [],
+                "dom": "<'card-header border-0 p-0 pt-6'<'card-title' <'d-flex align-items-center position-relative my-1'f> r> <'card-toolbar' <'d-flex justify-content-end add_button2'B> r>>  <'row'l r> <''t><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
+                lengthMenu: [[10, 25, 50, 100, 250, -1], [10, 25, 50, 100, 250, "الكل"]],
+                "language": {
+                    search: '',
+                    searchPlaceholder: 'بحث سريع'
+                },
+                buttons: [
+                    {
+                        extend: 'print',
+                        className: 'btn btn-light-primary me-3',
+                        text: '<i class="bi bi-printer-fill fs-2x"></i>'
+                    },
+                    // {extend: 'pdf', className: 'btn btn-raised btn-danger', text: 'PDF'},
+                    {
+                        extend: 'excel',
+                        className: 'btn btn-light-primary me-3',
+                        text: '<i class="bi bi-file-earmark-spreadsheet-fill fs-2x"></i>'
+                    },
+                    // {extend: 'colvis', className: 'btn secondary', text: 'إظهار / إخفاء الأعمدة '}
+                ],
+                ajax: {
+                    url: '{{ route('client.cards.datatable.data',$data->id)}}',
+                    data: {}
+                },
+                columns: [
+                    {data: 'checkbox', name: 'checkbox', "searchable": false, "orderable": false},
+                    {data: 'name', name: 'name', "searchable": true, "orderable": true},
+                    {data: 'created_at', name: 'created_at', "searchable": true, "orderable": true},
+                    {data: 'actions', name: 'actions', "searchable": false, "orderable": false},
+                ]
+            });
+            $.ajax({
+                url: "{{ URL::to('admin/add-client-card-button/'.$data->id)}}",
+                success: function (data) {
+                    $('.add_button2').append(data);
                 },
                 dataType: 'html'
             });

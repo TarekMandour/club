@@ -101,6 +101,14 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth
     Route::get('follower_datatable/{parent_id}', 'ClientController@datatable_followers')->name('follower.datatable.data');
 
 
+    Route::get('client_card_datatable/{parent_id}', 'ClientCardsController@datatable')->name('client.cards.datatable.data');
+    Route::get('delete-client-card', 'ClientCardsController@destroy');
+    Route::get('create-client-card/{parent_id}', 'ClientCardsController@create');
+    Route::post('store-client-card', 'ClientCardsController@store');
+    Route::get('edit-client-card/{id}', 'ClientCardsController@edit');
+    Route::post('update-client-card', 'ClientCardsController@update');
+    Route::get('add-client-card-button/{parent_id}', 'ClientCardsController@button');
+
 
 });
 

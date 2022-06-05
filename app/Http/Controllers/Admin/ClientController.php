@@ -76,7 +76,7 @@ class ClientController extends Controller
             })
             ->addColumn('actions', function ($row) {
                 $actions = '';
-                $actions .= ' <a href="' . url("admin/edit-client/" . $row->id) . '" class="btn btn-light-info"><i class="bi bi-eye-fill"></i>  </a>';
+                $actions .= ' <a href="' . url("admin/edit-client/" . $row->id) . '" class="btn btn-light-info"><i class="bi bi-pencil-fill"></i>  </a>';
                 return $actions;
 
             })
