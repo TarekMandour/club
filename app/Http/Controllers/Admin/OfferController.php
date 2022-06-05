@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Offer;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
@@ -11,7 +12,7 @@ use Illuminate\Http\Request;
 use App\Models\Page;
 use Validator;
 
-class CategoryController extends Controller
+class OfferController extends Controller
 {
     public function __construct()
     {
@@ -23,13 +24,14 @@ class CategoryController extends Controller
         // $query['data'] = Admin::orderBy('id','desc')->get();
         // $query['data'] = Admin::orderBy('id','desc')->paginate(10);
 
+        $data = Category::orderBy('id', 'desc')->first();
 
-        return view('admin.category.index');
+        return view('admin.offer.index');
     }
 
     public function datatable(Request $request)
     {
-        $data = Category::orderBy('id', 'asc');
+        $data = Offer::orderBy('id', 'asc');
         return Datatables::of($data)
             ->addColumn('checkbox', function ($row) {
                 $checkbox = '';
@@ -40,18 +42,13 @@ class CategoryController extends Controller
             })
             ->editColumn('name', function ($row) {
                 $name = '';
-                $name .= ' <span class="text-gray-800 text-hover-primary mb-1">' . $row->name . '</span>';
+                $name .= ' <span class="text-gray-800 text-hover-primary mb-1">' . $row->title . '</span>';
                 return $name;
             })
             ->editColumn('name_en', function ($row) {
                 $name_en = '';
-                $name_en .= ' <span class="text-gray-800 text-hover-primary mb-1">' . $row->name_en . '</span>';
+                $name_en .= ' <span class="text-gray-800 text-hover-primary mb-1">' . $row->title_en . '</span>';
                 return $name_en;
-            })
-            ->addColumn('parent', function ($row) {
-                $parent = '';
-                $parent .= ' <span class="text-gray-800 text-hover-primary mb-1">' . $row->Category && $row->parent != 0 ? $row->Category->name : "--" . '</span>';
-                return $parent;
             })
             ->editColumn('created_at', function ($row) {
                 $created_at = '';
@@ -59,29 +56,31 @@ class CategoryController extends Controller
                 return $created_at;
             })
             ->addColumn('actions', function ($row) {
-                $actions = ' <a href="' . url("admin/edit-category/" . $row->id) . '" class="btn btn-light-info"><i class="bi bi-pencil-fill"></i> تعديل </a>';
+                $actions = ' <a href="' . url("admin/edit-offer/" . $row->id) . '" class="btn btn-light-info"><i class="bi bi-pencil-fill"></i> تعديل </a>';
                 return $actions;
 
             })
-            ->rawColumns(['actions', 'checkbox', 'name', 'name_en', 'parent', 'created_at'])
+            ->rawColumns(['actions', 'checkbox', 'name', 'name_en', 'created_at'])
             ->make();
 
     }
 
     public function create()
     {
-        return view('admin.category.create');
+        return view('admin.offer.create');
     }
 
     public function store(Request $request)
     {
         $rule = [
-            'name' => 'required|string',
-            'name_en' => 'required|string',
-            'meta_keywords' => 'nullable|string',
-            'meta_description' => 'nullable|string',
-            'parent' => 'nullable',
-            'photo' => 'image|mimes:png,jpg,jpeg|max:2048',
+            'title' => 'required|string',
+            'title_en' => 'required|string',
+            'slogan' => 'required|string',
+            'slogan_en' => 'required|string',
+            'content' => 'required|string',
+            'content_en' => 'required|string',
+            'photo' => 'required|image|mimes:png,jpg,jpeg|max:2048',
+            'qrcode' => 'required|image|mimes:png,jpg,jpeg|max:2048',
         ];
         $validate = Validator::make($request->all(), $rule);
         if ($validate->fails()) {
@@ -89,15 +88,18 @@ class CategoryController extends Controller
         }
 
 
-        $data = Category::create([
-            'name' => $request->name,
-            'name_en' => $request->name_en,
-            'meta_keywords' => $request->meta_keywords,
-            'meta_description' => $request->meta_description,
-            'parent' => $request->parent,
+        $data = Offer::create([
+            'title' => $request->title,
+            'title_en' => $request->title_en,
+            'slogan' => $request->slogan,
+            'slogan_en' => $request->slogan_en,
+            'content' => $request->content,
+            'content_en' => $request->content_en,
             'photo' => $request->photo,
+            'qrcode' => $request->qrcode,
+
         ]);
-        return redirect('admin/category')->with('message', 'تم الاضافة بنجاح')->with('status', 'success');
+        return redirect('admin/offer')->with('message', 'تم الاضافة بنجاح')->with('status', 'success');
     }
 
 //    public function show($id)
@@ -109,9 +111,8 @@ class CategoryController extends Controller
 
     public function edit($id)
     {
-        // $query['data'] = Admin::where('id', $id)->get();
-        $query['data'] = Category::find($id);
-        return view('admin.category.edit', $query);
+        $query['data'] = Offer::findOrFail($id);
+        return view('admin.offer.edit', $query);
     }
 
     public function update(Request $request)
@@ -119,43 +120,48 @@ class CategoryController extends Controller
 
         $rule = [
             'id' => 'required',
-            'name' => 'required|string',
-            'name_en' => 'required|string',
-            'meta_keywords' => 'nullable|string',
-            'meta_description' => 'nullable|string',
-            'parent' => 'nullable',
-            'photo' => 'image|mimes:png,jpg,jpeg|max:2048',
+            'title' => 'required|string',
+            'title_en' => 'required|string',
+            'slogan' => 'required|string',
+            'slogan_en' => 'required|string',
+            'content' => 'required|string',
+            'content_en' => 'required|string',
+            'photo' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
+            'qrcode' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
         ];
+
+
         $validate = Validator::make($request->all(), $rule);
         if ($validate->fails()) {
             return redirect()->back()->with('message', $validate->messages()->first())->with('status', 'error');
         }
 
-        $data = Category::findOrFail($request->id);
-        $data->name = $request->name;
-        $data->name_en = $request->name_en;
-        $data->meta_keywords = $request->meta_keywords;
-        $data->meta_description = $request->meta_description;
-        $data->parent = $request->parent;
-        if(is_file($request->photo)){
-        $data->photo = $request->photo;
+
+        $data = Offer::findOrFail($request->id);
+        $data->title = $request->title;
+        $data->title_en = $request->title_en;
+        $data->slogan = $request->slogan;
+        $data->slogan_en = $request->slogan_en;
+        $data->content = $request->content;
+        $data->content_en = $request->content_en;
+        if (is_file($request->photo)) {
+            $data->photo = $request->photo;
+        }
+        if (is_file($request->qrcode)) {
+            $data->qrcode = $request->qrcode;
         }
         $data->save();
 
 
-        return redirect('admin/category')->with('message', 'تم التعديل بنجاح')->with('status', 'success');
+        return redirect('admin/offer')->with('message', 'تم التعديل بنجاح')->with('status', 'success');
     }
 
     public function destroy(Request $request)
     {
 
         try {
-            $categories = Category::whereIn('id', $request->id)->delete();
-            $categories = Category::whereIn('parent', $request->id)->update(
-                [
-                    'parent' => 0
-                ]
-            );
+            $categories = Offer::whereIn('id', $request->id)->delete();
+
         } catch (\Exception $e) {
 
             return response()->json(['message' => 'Failed']);

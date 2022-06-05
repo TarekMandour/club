@@ -7,6 +7,17 @@ use Illuminate\Support\Facades\App;
 
 class Offer extends Model
 {
+    protected $guarded =[];
+
+    public function setPhotoAttribute($image)
+    {
+        if (is_file($image)) {
+            $img_name = time() . uniqid() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/offers'), $img_name);
+            $this->attributes['photo'] = $img_name;
+        }
+    }
+
     public function getPhotoAttribute($image)
     {
         if (!empty($image)) {
@@ -14,7 +25,16 @@ class Offer extends Model
         }
         return "";
     }
-    
+
+    public function setQrcodeAttribute($image)
+    {
+        if (is_file($image)) {
+            $img_name = time() . uniqid() . '_offer.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/offers'), $img_name);
+            $this->attributes['qrcode'] = $img_name;
+        }
+    }
+
     public function getQrcodeAttribute($image)
     {
         if (!empty($image)) {

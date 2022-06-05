@@ -24,7 +24,7 @@
                 <form id="kt_account_profile_details_form" action="{{url('admin/update-category')}}" class="form"
                       method="post" enctype="multipart/form-data">
                     @csrf
-
+                    <input type="hidden" name="id" value="{{$data->id}}">
                     <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
                         <!--begin:::Tabs-->
                         <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-bold mb-n2">
@@ -177,7 +177,7 @@
                         <!--end::Tab content-->
                         <div class="d-flex justify-content-end">
                             <!--begin::Button-->
-                            <a href="../../demo8/dist/apps/ecommerce/catalog/products.html" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">الغاء</a>
+                            <a href="{{url('admin/category')}}" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">الغاء</a>
                             <!--end::Button-->
                             <!--begin::Button-->
                             <button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-primary">

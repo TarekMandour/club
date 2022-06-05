@@ -7,16 +7,27 @@ use Illuminate\Support\Facades\App;
 
 class Post extends Model
 {
+
+    protected $guarded =[];
     public function category()
     {
         return $this->hasOne('App\Models\Category', 'id', 'cat_id');
     }
+
 
     public function postgallery()
     {
         return $this->hasMany(PostGallery::class, 'post_id');
     }
 
+    public function setPhotoAttribute($image)
+    {
+        if (is_file($image)) {
+            $img_name = time() . uniqid() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/posts'), $img_name);
+            $this->attributes['photo'] = $img_name;
+        }
+    }
     public function getPhotoAttribute($image)
     {
         if (!empty($image)) {
