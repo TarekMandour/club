@@ -19,7 +19,7 @@
                         <span class="menu-icon">
                             <i class="bi bi-gear text-primary"></i>
                         </span>
-                        <span class="menu-title">page</span>
+                        <span class="menu-title">الصفحات</span>
                     </a>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                         <span class="menu-icon">
                             <i class="bi bi-gear text-primary"></i>
                         </span>
-                        <span class="menu-title">categories</span>
+                        <span class="menu-title">التصنيفات</span>
                     </a>
                 </div>
             </div>
@@ -44,7 +44,7 @@
                         <span class="menu-icon">
                             <i class="bi bi-gear text-primary"></i>
                         </span>
-                        <span class="menu-title">posts</span>
+                        <span class="menu-title">المقالات</span>
                     </a>
                 </div>
             </div>
@@ -56,7 +56,7 @@
                         <span class="menu-icon">
                             <i class="bi bi-gear text-primary"></i>
                         </span>
-                        <span class="menu-title">offers</span>
+                        <span class="menu-title">العروض</span>
                     </a>
                 </div>
             </div>
