@@ -26,14 +26,14 @@ class Offer extends Model
         return "";
     }
 
-    public function setQrcodeAttribute($image)
-    {
-        if (is_file($image)) {
-            $img_name = time() . uniqid() . '_offer.' . $image->getClientOriginalExtension();
-            $image->move(public_path('uploads/offers'), $img_name);
-            $this->attributes['qrcode'] = $img_name;
-        }
-    }
+//    public function setQrcodeAttribute($image)
+//    {
+//        if (is_file($image)) {
+//            $img_name = time() . uniqid() . '_offer.' . $image->getClientOriginalExtension();
+//            $image->move(public_path('uploads/offers'), $img_name);
+//            $this->attributes['qrcode'] = $img_name;
+//        }
+//    }
 
     public function getQrcodeAttribute($image)
     {

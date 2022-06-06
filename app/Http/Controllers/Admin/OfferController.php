@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Offer;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
 use App\Models\Page;
@@ -80,12 +81,18 @@ class OfferController extends Controller
             'content' => 'required|string',
             'content_en' => 'required|string',
             'photo' => 'required|image|mimes:png,jpg,jpeg|max:2048',
-            'qrcode' => 'required|image|mimes:png,jpg,jpeg|max:2048',
+//            'qrcode' => 'required|image|mimes:png,jpg,jpeg|max:2048',
         ];
         $validate = Validator::make($request->all(), $rule);
         if ($validate->fails()) {
             return redirect()->back()->with('message', $validate->messages()->first())->with('status', 'error');
         }
+
+        $qr_code_name = time() . uniqid() . '_offer.png';
+        $qr_code = QrCode::color(255, 0, 127)
+            ->format('png')
+            ->size(250)
+            ->generate($request->slogan, public_path('uploads/offers/' . $qr_code_name));
 
 
         $data = Offer::create([
@@ -96,7 +103,7 @@ class OfferController extends Controller
             'content' => $request->content,
             'content_en' => $request->content_en,
             'photo' => $request->photo,
-            'qrcode' => $request->qrcode,
+            'qrcode' => $qr_code_name,
 
         ]);
         return redirect('admin/offer')->with('message', 'تم الاضافة بنجاح')->with('status', 'success');
@@ -127,7 +134,7 @@ class OfferController extends Controller
             'content' => 'required|string',
             'content_en' => 'required|string',
             'photo' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
-            'qrcode' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
+//            'qrcode' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
         ];
 
 
@@ -135,6 +142,13 @@ class OfferController extends Controller
         if ($validate->fails()) {
             return redirect()->back()->with('message', $validate->messages()->first())->with('status', 'error');
         }
+
+        $qr_code_name = time() . uniqid() . '_offer.png';
+        $qr_code = QrCode::color(255, 0, 127)
+            ->format('png')
+            ->size(250)
+            ->encoding('UTF-8')
+            ->generate((string)$request->slogan, public_path('uploads/offers/' . $qr_code_name));
 
 
         $data = Offer::findOrFail($request->id);
@@ -147,9 +161,9 @@ class OfferController extends Controller
         if (is_file($request->photo)) {
             $data->photo = $request->photo;
         }
-        if (is_file($request->qrcode)) {
-            $data->qrcode = $request->qrcode;
-        }
+
+        $data->qrcode = $qr_code_name;
+
         $data->save();
 
 

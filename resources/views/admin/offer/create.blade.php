@@ -68,9 +68,8 @@
                                                 <label class="form-label">الشعار (slogan)</label>
                                                 <!--end::Label-->
                                                 <!--begin::Editor-->
-                                                <textarea name="slogan" id="kt_docs_tinymce_basic">
+                                                <input type="text" name="slogan" class="form-control mb-2" placeholder="ادخل الشعار (slogan)" value="" />
 
-                                                            </textarea>
                                                 <!--end::Editor-->
                                             </div>
 
@@ -112,11 +111,9 @@
                                                 <!--begin::Label-->
                                                 <label class="form-label">الشعار EN (slogan)</label>
                                                 <!--end::Label-->
-                                                <!--begin::Editor-->
-                                                <textarea name="slogan_en" id="kt_docs_tinymce_basic2">
+                                                <input type="text" name="slogan_en" class="form-control mb-2" placeholder="ادخل الشعار EN (slogan)" value="" />
 
-                                                            </textarea>
-                                                <!--end::Editor-->
+
                                             </div>
 
                                             <div>

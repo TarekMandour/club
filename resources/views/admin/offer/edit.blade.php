@@ -69,9 +69,10 @@
                                                 <label class="form-label">الشعار (slogan)</label>
                                                 <!--end::Label-->
                                                 <!--begin::Editor-->
-                                                <textarea name="slogan" id="kt_docs_tinymce_basic">
-                                                            {!! $data->slogan !!}
-                                                            </textarea>
+                                                <input type="text" name="slogan" class="form-control mb-2"
+                                                       placeholder="ادخل الشعار (slogan)" value="{{$data->slogan}}"/>
+
+
                                                 <!--end::Editor-->
                                             </div>
 
@@ -116,9 +117,9 @@
                                                 <label class="form-label">الشعار EN (slogan)</label>
                                                 <!--end::Label-->
                                                 <!--begin::Editor-->
-                                                <textarea name="slogan_en" id="kt_docs_tinymce_basic2">
-                                                            {!! $data->slogan_en !!}
-                                                            </textarea>
+                                                <input type="text" name="slogan_en" class="form-control mb-2"
+                                                       placeholder="ادخل الشعار EN (slogan)"
+                                                       value="{{$data->slogan_en}}"/>
                                                 <!--end::Editor-->
                                             </div>
 
@@ -210,42 +211,45 @@
                                                          data-kt-image-input="true"
                                                          style="background-image: url('{{asset('public/admin')}}/assets/media/svg/avatars/blank.svg')">
                                                         <!--begin::Preview existing avatar-->
-                                                        <div class="image-input-wrapper w-125px h-125px"
-                                                             style="background-image: url({{$data->qrcode}})"></div>
+
+
+
+                                                            <img src="{{$data->qrcode}}" width="250px" height="250px" alt="">
+
                                                         <!--end::Preview existing avatar-->
                                                         <!--begin::Label-->
-                                                        <label
-                                                            class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                                            data-kt-image-input-action="change" data-bs-toggle="tooltip"
-                                                            title="تعديل">
-                                                            <i class="bi bi-pencil-fill fs-7"></i>
-                                                            <!--begin::Inputs-->
-                                                            <input type="file" name="qrcode"
-                                                                   accept=".png, .jpg, .jpeg"/>
-                                                            <input type="hidden" name="avatar_remove"/>
-                                                            <!--end::Inputs-->
-                                                        </label>
+{{--                                                        <label--}}
+{{--                                                            class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"--}}
+{{--                                                            data-kt-image-input-action="change" data-bs-toggle="tooltip"--}}
+{{--                                                            title="تعديل">--}}
+{{--                                                            <i class="bi bi-pencil-fill fs-7"></i>--}}
+{{--                                                            <!--begin::Inputs-->--}}
+{{--                                                            <input type="file" name="qrcode"--}}
+{{--                                                                   accept=".png, .jpg, .jpeg"/>--}}
+{{--                                                            <input type="hidden" name="avatar_remove"/>--}}
+{{--                                                            <!--end::Inputs-->--}}
+{{--                                                        </label>--}}
                                                         <!--end::Label-->
                                                         <!--begin::Cancel-->
-                                                        <span
-                                                            class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                                            data-kt-image-input-action="cancel" data-bs-toggle="tooltip"
-                                                            title="الغاء">
-                                                        <i class="bi bi-x fs-2"></i>
-                                                    </span>
+{{--                                                        <span--}}
+{{--                                                            class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"--}}
+{{--                                                            data-kt-image-input-action="cancel" data-bs-toggle="tooltip"--}}
+{{--                                                            title="الغاء">--}}
+{{--                                                        <i class="bi bi-x fs-2"></i>--}}
+{{--                                                    </span>--}}
                                                         <!--end::Cancel-->
                                                         <!--begin::Remove-->
-                                                        <span
-                                                            class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                                            data-kt-image-input-action="remove" data-bs-toggle="tooltip"
-                                                            title="حذف">
-                                                        <i class="bi bi-x fs-2"></i>
-                                                    </span>
+{{--                                                        <span--}}
+{{--                                                            class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"--}}
+{{--                                                            data-kt-image-input-action="remove" data-bs-toggle="tooltip"--}}
+{{--                                                            title="حذف">--}}
+{{--                                                        <i class="bi bi-x fs-2"></i>--}}
+{{--                                                    </span>--}}
                                                         <!--end::Remove-->
                                                     </div>
                                                     <!--end::Image input-->
                                                     <!--begin::Hint-->
-                                                    <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
+{{--                                                    <div class="form-text">Allowed file types: png, jpg, jpeg.</div>--}}
                                                     <!--end::Hint-->
                                                 </div>
                                             </div>
