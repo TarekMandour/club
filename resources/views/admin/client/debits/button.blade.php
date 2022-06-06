@@ -6,26 +6,28 @@
 {{--    </a>--}}
 
     <button type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal"
-            data-bs-target="#kt_modal_add_card">
+            data-bs-target="#kt_modal_add_payment">
         <i class="bi bi-plus-circle-fill fs-2x"></i>
     </button>
 
     <!--end::Add user-->
-    <button id="delete2" class="btn btn-light-danger me-3 font-weight-bolder">
+    <button id="delete4" class="btn btn-light-danger me-3 font-weight-bolder">
         <i class="bi bi-trash-fill fs-2x"></i>
     </button>
 
+
+
+
 </div>
 
-
 <!--begin::Modal - Add task-->
-<div class="modal fade" id="kt_modal_add_card" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="kt_modal_add_payment" tabindex="-3" aria-hidden="true">
     <!--begin::Modal dialog-->
     <div class="modal-dialog modal-dialog-centered mw-650px">
         <!--begin::Modal content-->
         <div class="modal-content">
             <!--begin::Modal header-->
-            <div class="modal-header" id="kt_modal_add_user_header">
+            <div class="modal-header" id="kt_modal_add_debit_header">
                 <!--begin::Modal title-->
                 <h2 class="fw-bolder">اضف جديد</h2>
                 <!--end::Modal title-->
@@ -50,7 +52,7 @@
             <!--begin::Modal body-->
             <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                 <!--begin::Form-->
-                <form id="" class="form" method="post" action="{{url('admin/store-client-card')}}" enctype="multipart/form-data">
+                <form id="" class="form" method="post" action="{{url('admin/store-client-debts')}}" enctype="multipart/form-data">
                 @csrf
                 <!--begin::Scroll-->
                     <div class="d-flex flex-column scroll-y me-n7 pe-7"
@@ -64,16 +66,30 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fw-bold fs-6 mb-2">الاسم الكارت</label>
+                            <label class="required fw-bold fs-6 mb-2">التاريخ  </label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" name="name"
+                            <input type="date" name="date"
                                    class="form-control form-control-solid mb-3 mb-lg-0"
-                                   placeholder="الاسم" value="{{old('name')}}" required/>
+                                   placeholder="التاريخ" value="{{old('date')}}" required/>
                             <input type="hidden" name="client_id" value="{{$data->id}}">
                             <!--end::Input-->
                         </div>
-                        <!--end::Input group-->  <!--begin::Input group-->
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fw-bold fs-6 mb-2">المبلغ  </label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="number" name="amount"
+                                   class="form-control form-control-solid mb-3 mb-lg-0"
+                                   placeholder="المبلغ" value="{{old('amount')}}" required/>
+                            <input type="hidden" name="client_id" value="{{$data->id}}">
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
 
 
                         <!--end::Input group-->
@@ -108,7 +124,7 @@
 
 <script type="text/javascript">
 
-    $("#delete2").on("click", function () {
+    $("#delete4").on("click", function () {
         var dataList = [];
         $("input:checkbox:checked").each(function (index) {
             dataList.push($(this).val())
@@ -128,7 +144,7 @@
                 if (result.value) {
                     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
                     $.ajax({
-                        url: '{{url("admin/delete-client-card")}}',
+                        url: '{{url("admin/delete-client-debts")}}',
                         type: "get",
                         data: {'id': dataList, _token: CSRF_TOKEN},
                         dataType: "JSON",

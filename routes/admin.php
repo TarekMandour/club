@@ -103,12 +103,38 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth
 
     Route::get('client_card_datatable/{parent_id}', 'ClientCardsController@datatable')->name('client.cards.datatable.data');
     Route::get('delete-client-card', 'ClientCardsController@destroy');
-    Route::get('create-client-card/{parent_id}', 'ClientCardsController@create');
     Route::post('store-client-card', 'ClientCardsController@store');
     Route::get('edit-client-card/{id}', 'ClientCardsController@edit');
     Route::post('update-client-card', 'ClientCardsController@update');
     Route::get('add-client-card-button/{parent_id}', 'ClientCardsController@button');
 
+
+//debts
+    Route::get('client_debts_datatable/{parent_id}', 'ClientDebtsController@datatable')->name('client.debts.datatable.data');
+    Route::get('delete-client-debts', 'ClientDebtsController@destroy');
+    Route::post('store-client-debts', 'ClientDebtsController@store');
+    Route::get('edit-client-debts/{id}', 'ClientDebtsController@edit');
+    Route::post('update-client-debts', 'ClientDebtsController@update');
+    Route::get('add-client-debts-button/{parent_id}', 'ClientDebtsController@button');
+
+
+//payment
+    Route::get('client_payment_datatable/{parent_id}', 'ClientPaymentController@datatable')->name('client.payment.datatable.data');
+    Route::get('delete-client-payment', 'ClientPaymentController@destroy');
+    Route::post('store-client-payment', 'ClientPaymentController@store');
+    Route::get('edit-client-payment/{id}', 'ClientPaymentController@edit');
+    Route::post('update-client-payment', 'ClientPaymentController@update');
+    Route::get('add-client-payment-button/{parent_id}', 'ClientPaymentController@button');
+
+
+
+//notification
+    Route::get('client_notification_datatable/{parent_id}', 'ClientNotificationController@datatable')->name('client.notification.datatable.data');
+    Route::get('delete-client-notification', 'ClientNotificationController@destroy');
+    Route::post('store-client-notification', 'ClientNotificationController@store');
+    Route::get('edit-client-notification/{id}', 'ClientNotificationController@edit');
+    Route::post('update-client-notification', 'ClientNotificationController@update');
+    Route::get('add-client-notification-button/{parent_id}', 'ClientNotificationController@button');
 
 });
 
