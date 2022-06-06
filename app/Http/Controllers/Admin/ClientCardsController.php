@@ -27,7 +27,6 @@ class ClientCardsController extends Controller
     {
 
         $query['data'] = Client::findOrFail($id);
-
         return view('admin/client/cards/button', $query);
     }
 
