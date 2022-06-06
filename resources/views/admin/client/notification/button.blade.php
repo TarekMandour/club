@@ -119,7 +119,6 @@
 </div>
 <!--end::Modal - Add task-->
 
-
 <script type="text/javascript">
 
     $("#delete6").on("click", function () {
