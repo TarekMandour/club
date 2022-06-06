@@ -28,33 +28,33 @@
                         <!--begin:::Tab item-->
                             <li class="nav-item">
                                 <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab"
-                                   href="#client_data">بيانات العميل </a>
+                                   href="#client_data" onclick="">بيانات العميل </a>
                             </li>
                             <!--end:::Tab item-->
                             <!--begin:::Tab item-->
                             <li class="nav-item">
                                 <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
-                                   href="#Followers">التابعين</a>
+                                   href="#Followers" onclick="followers()">التابعين</a>
                             </li>
                             <!--end:::Tab item-->
                             <!--begin:::Tab item-->
                             <li class="nav-item">
                                 <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
-                                   href="#Cards">الكروت</a>
+                                   href="#Cards" onclick="cards()">الكروت</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
-                                   href="#Debts">الديون</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
-                                   href="#payment">المدفوعات</a>
+                                   href="#Debts" onclick="debits()">الديون</a>
                             </li>
 
                             <li class="nav-item">
                                 <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
-                                   href="#notification">الاشعارات</a>
+                                   href="#payment" onclick="payment()">المدفوعات</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
+                                   href="#notification" onclick="notification()">الاشعارات</a>
                             </li>
                             <!--end:::Tab item-->
                             <!--begin:::Tab item-->
@@ -777,254 +777,270 @@
     <script src="{{ URL::asset('public/admin/assets/plugins/custom/tinymce/tinymce.bundle.js')}}"></script>
     <script src="{{asset('public/admin')}}/assets/plugins/custom/datatables/datatables.bundle.js"></script>
     <script type="text/javascript">
-        $(function () {
-            var table = $('#data_table_followers').DataTable({
-                processing: true,
-                serverSide: true,
-                autoWidth: false,
-                responsive: true,
-                aaSorting: [],
-                "dom": "<'card-header border-0 p-0 pt-6'<'card-title' <'d-flex align-items-center position-relative my-1'f> r> <'card-toolbar' <'d-flex justify-content-end add_button'B> r>>  <'row'l r> <''t><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
-                lengthMenu: [[10, 25, 50, 100, 250, -1], [10, 25, 50, 100, 250, "الكل"]],
-                "language": {
-                    search: '',
-                    searchPlaceholder: 'بحث سريع'
-                },
-                buttons: [
-                    {
-                        extend: 'print',
-                        className: 'btn btn-light-primary me-3',
-                        text: '<i class="bi bi-printer-fill fs-2x"></i>'
-                    },
-                    // {extend: 'pdf', className: 'btn btn-raised btn-danger', text: 'PDF'},
-                    {
-                        extend: 'excel',
-                        className: 'btn btn-light-primary me-3',
-                        text: '<i class="bi bi-file-earmark-spreadsheet-fill fs-2x"></i>'
-                    },
-                    // {extend: 'colvis', className: 'btn secondary', text: 'إظهار / إخفاء الأعمدة '}
-                ],
-                ajax: {
-                    url: '{{ route('follower.datatable.data',$data->id)}}',
-                    data: {}
-                },
-                columns: [
-                    {data: 'checkbox', name: 'checkbox', "searchable": false, "orderable": false},
-                    {data: 'name', name: 'name', "searchable": true, "orderable": true},
-                    {data: 'phone', name: 'phone', "searchable": true, "orderable": true},
-                    {data: 'membership_no', name: 'membership_no', "searchable": true, "orderable": true},
-                    {data: 'job', name: 'job', "searchable": true, "orderable": true},
-                    {data: 'is_active', name: 'is_active', "searchable": false, "orderable": false},
-                    {data: 'created_at', name: 'created_at', "searchable": true, "orderable": true},
-                    {data: 'actions', name: 'actions', "searchable": false, "orderable": false},
-                ]
-            });
-            $.ajax({
-                url: "{{ URL::to('admin/add-client-button')}}",
-                success: function (data) {
-                    $('.add_button').append(data);
-                },
-                dataType: 'html'
-            });
-        });
+         function followers(){
+             $(function () {
+                 var table = $('#data_table_followers').DataTable({
+                     processing: true,
+                     serverSide: true,
+                     autoWidth: false,
+                     responsive: true,
+                     aaSorting: [],
+                     "dom": "<'card-header border-0 p-0 pt-6'<'card-title' <'d-flex align-items-center position-relative my-1'f> r> <'card-toolbar' <'d-flex justify-content-end add_button'B> r>>  <'row'l r> <''t><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
+                     lengthMenu: [[10, 25, 50, 100, 250, -1], [10, 25, 50, 100, 250, "الكل"]],
+                     "language": {
+                         search: '',
+                         searchPlaceholder: 'بحث سريع'
+                     },
+                     buttons: [
+                         {
+                             extend: 'print',
+                             className: 'btn btn-light-primary me-3',
+                             text: '<i class="bi bi-printer-fill fs-2x"></i>'
+                         },
+                         // {extend: 'pdf', className: 'btn btn-raised btn-danger', text: 'PDF'},
+                         {
+                             extend: 'excel',
+                             className: 'btn btn-light-primary me-3',
+                             text: '<i class="bi bi-file-earmark-spreadsheet-fill fs-2x"></i>'
+                         },
+                         // {extend: 'colvis', className: 'btn secondary', text: 'إظهار / إخفاء الأعمدة '}
+                     ],
+                     ajax: {
+                         url: '{{ route('follower.datatable.data',$data->id)}}',
+                         data: {}
+                     },
+                     columns: [
+                         {data: 'checkbox', name: 'checkbox', "searchable": false, "orderable": false},
+                         {data: 'name', name: 'name', "searchable": true, "orderable": true},
+                         {data: 'phone', name: 'phone', "searchable": true, "orderable": true},
+                         {data: 'membership_no', name: 'membership_no', "searchable": true, "orderable": true},
+                         {data: 'job', name: 'job', "searchable": true, "orderable": true},
+                         {data: 'is_active', name: 'is_active', "searchable": false, "orderable": false},
+                         {data: 'created_at', name: 'created_at', "searchable": true, "orderable": true},
+                         {data: 'actions', name: 'actions', "searchable": false, "orderable": false},
+                     ]
+                 });
+                 $.ajax({
+                     url: "{{ URL::to('admin/add-client-button')}}",
+                     success: function (data) {
+                         $('.add_button').append(data);
+                     },
+                     dataType: 'html'
+                 });
+             });
+        }
+
     </script>
     <script type="text/javascript">
-        $(function () {
-            var table = $('#data_table_cards').DataTable({
-                processing: true,
-                serverSide: true,
-                autoWidth: false,
-                responsive: true,
-                aaSorting: [],
-                "dom": "<'card-header border-0 p-0 pt-6'<'card-title' <'d-flex align-items-center position-relative my-1'f> r> <'card-toolbar' <'d-flex justify-content-end add_button2'B> r>>  <'row'l r> <''t><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
-                lengthMenu: [[10, 25, 50, 100, 250, -1], [10, 25, 50, 100, 250, "الكل"]],
-                "language": {
-                    search: '',
-                    searchPlaceholder: 'بحث سريع'
-                },
-                buttons: [
-                    {
-                        extend: 'print',
-                        className: 'btn btn-light-primary me-3',
-                        text: '<i class="bi bi-printer-fill fs-2x"></i>'
+        function cards(){
+            $(function () {
+                var table = $('#data_table_cards').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    autoWidth: false,
+                    responsive: true,
+                    aaSorting: [],
+                    "dom": "<'card-header border-0 p-0 pt-6'<'card-title' <'d-flex align-items-center position-relative my-1'f> r> <'card-toolbar' <'d-flex justify-content-end add_button2'B> r>>  <'row'l r> <''t><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
+                    lengthMenu: [[10, 25, 50, 100, 250, -1], [10, 25, 50, 100, 250, "الكل"]],
+                    "language": {
+                        search: '',
+                        searchPlaceholder: 'بحث سريع'
                     },
-                    // {extend: 'pdf', className: 'btn btn-raised btn-danger', text: 'PDF'},
-                    {
-                        extend: 'excel',
-                        className: 'btn btn-light-primary me-3',
-                        text: '<i class="bi bi-file-earmark-spreadsheet-fill fs-2x"></i>'
+                    buttons: [
+                        {
+                            extend: 'print',
+                            className: 'btn btn-light-primary me-3',
+                            text: '<i class="bi bi-printer-fill fs-2x"></i>'
+                        },
+                        // {extend: 'pdf', className: 'btn btn-raised btn-danger', text: 'PDF'},
+                        {
+                            extend: 'excel',
+                            className: 'btn btn-light-primary me-3',
+                            text: '<i class="bi bi-file-earmark-spreadsheet-fill fs-2x"></i>'
+                        },
+                        // {extend: 'colvis', className: 'btn secondary', text: 'إظهار / إخفاء الأعمدة '}
+                    ],
+                    ajax: {
+                        url: '{{ route('client.cards.datatable.data',$data->id)}}',
+                        data: {}
                     },
-                    // {extend: 'colvis', className: 'btn secondary', text: 'إظهار / إخفاء الأعمدة '}
-                ],
-                ajax: {
-                    url: '{{ route('client.cards.datatable.data',$data->id)}}',
-                    data: {}
-                },
-                columns: [
-                    {data: 'checkbox', name: 'checkbox', "searchable": false, "orderable": false},
-                    {data: 'name', name: 'name', "searchable": true, "orderable": true},
-                    {data: 'created_at', name: 'created_at', "searchable": true, "orderable": true},
+                    columns: [
+                        {data: 'checkbox', name: 'checkbox', "searchable": false, "orderable": false},
+                        {data: 'name', name: 'name', "searchable": true, "orderable": true},
+                        {data: 'created_at', name: 'created_at', "searchable": true, "orderable": true},
 
-                ]
+                    ]
+                });
+                $.ajax({
+                    url: "{{ URL::to('admin/add-client-card-button/'.$data->id)}}",
+                    success: function (data) {
+                        $('.add_button2').append(data);
+                    },
+                    dataType: 'html'
+                });
             });
-            $.ajax({
-                url: "{{ URL::to('admin/add-client-card-button/'.$data->id)}}",
-                success: function (data) {
-                    $('.add_button2').append(data);
-                },
-                dataType: 'html'
-            });
-        });
+        }
+
     </script>
     <script type="text/javascript">
-        $(function () {
-            var table = $('#data_table_debts').DataTable({
-                processing: true,
-                serverSide: true,
-                autoWidth: false,
-                responsive: true,
-                aaSorting: [],
-                "dom": "<'card-header border-0 p-0 pt-6'<'card-title' <'d-flex align-items-center position-relative my-1'f> r> <'card-toolbar' <'d-flex justify-content-end add_button3'B> r>>  <'row'l r> <''t><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
-                lengthMenu: [[10, 25, 50, 100, 250, -1], [10, 25, 50, 100, 250, "الكل"]],
-                "language": {
-                    search: '',
-                    searchPlaceholder: 'بحث سريع'
-                },
-                buttons: [
-                    {
-                        extend: 'print',
-                        className: 'btn btn-light-primary me-3',
-                        text: '<i class="bi bi-printer-fill fs-2x"></i>'
+        function debits(){
+            $(function () {
+                var table = $('#data_table_debts').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    autoWidth: false,
+                    responsive: true,
+                    aaSorting: [],
+                    "dom": "<'card-header border-0 p-0 pt-6'<'card-title' <'d-flex align-items-center position-relative my-1'f> r> <'card-toolbar' <'d-flex justify-content-end add_button3'B> r>>  <'row'l r> <''t><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
+                    lengthMenu: [[10, 25, 50, 100, 250, -1], [10, 25, 50, 100, 250, "الكل"]],
+                    "language": {
+                        search: '',
+                        searchPlaceholder: 'بحث سريع'
                     },
-                    // {extend: 'pdf', className: 'btn btn-raised btn-danger', text: 'PDF'},
-                    {
-                        extend: 'excel',
-                        className: 'btn btn-light-primary me-3',
-                        text: '<i class="bi bi-file-earmark-spreadsheet-fill fs-2x"></i>'
+                    buttons: [
+                        {
+                            extend: 'print',
+                            className: 'btn btn-light-primary me-3',
+                            text: '<i class="bi bi-printer-fill fs-2x"></i>'
+                        },
+                        // {extend: 'pdf', className: 'btn btn-raised btn-danger', text: 'PDF'},
+                        {
+                            extend: 'excel',
+                            className: 'btn btn-light-primary me-3',
+                            text: '<i class="bi bi-file-earmark-spreadsheet-fill fs-2x"></i>'
+                        },
+                        // {extend: 'colvis', className: 'btn secondary', text: 'إظهار / إخفاء الأعمدة '}
+                    ],
+                    ajax: {
+                        url: '{{ route('client.debts.datatable.data',$data->id)}}',
+                        data: {}
                     },
-                    // {extend: 'colvis', className: 'btn secondary', text: 'إظهار / إخفاء الأعمدة '}
-                ],
-                ajax: {
-                    url: '{{ route('client.debts.datatable.data',$data->id)}}',
-                    data: {}
-                },
-                columns: [
-                    {data: 'checkbox', name: 'checkbox', "searchable": false, "orderable": false},
-                    {data: 'date', name: 'date', "searchable": true, "orderable": true},
-                    {data: 'amount', name: 'amount', "searchable": true, "orderable": true},
-                    {data: 'created_at', name: 'created_at', "searchable": true, "orderable": true},
-                    {data: 'actions', name: 'actions', "searchable": true, "orderable": true},
+                    columns: [
+                        {data: 'checkbox', name: 'checkbox', "searchable": false, "orderable": false},
+                        {data: 'date', name: 'date', "searchable": true, "orderable": true},
+                        {data: 'amount', name: 'amount', "searchable": true, "orderable": true},
+                        {data: 'created_at', name: 'created_at', "searchable": true, "orderable": true},
+                        {data: 'actions', name: 'actions', "searchable": true, "orderable": true},
 
-                ]
+                    ]
+                });
+                $.ajax({
+                    url: "{{ URL::to('admin/add-client-debts-button/'.$data->id)}}",
+                    success: function (data) {
+                        $('.add_button3').append(data);
+                    },
+                    dataType: 'html'
+                });
             });
-            $.ajax({
-                url: "{{ URL::to('admin/add-client-debts-button/'.$data->id)}}",
-                success: function (data) {
-                    $('.add_button3').append(data);
-                },
-                dataType: 'html'
-            });
-        });
+        }
+
     </script>
     <script type="text/javascript">
-        $(function () {
-            var table = $('#data_table_payment').DataTable({
-                processing: true,
-                serverSide: true,
-                autoWidth: false,
-                responsive: true,
-                aaSorting: [],
-                "dom": "<'card-header border-0 p-0 pt-6'<'card-title' <'d-flex align-items-center position-relative my-1'f> r> <'card-toolbar' <'d-flex justify-content-end add_button4'B> r>>  <'row'l r> <''t><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
-                lengthMenu: [[10, 25, 50, 100, 250, -1], [10, 25, 50, 100, 250, "الكل"]],
-                "language": {
-                    search: '',
-                    searchPlaceholder: 'بحث سريع'
-                },
-                buttons: [
-                    {
-                        extend: 'print',
-                        className: 'btn btn-light-primary me-3',
-                        text: '<i class="bi bi-printer-fill fs-2x"></i>'
+        function payment(){
+            $(function () {
+                var table = $('#data_table_payment').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    autoWidth: false,
+                    responsive: true,
+                    aaSorting: [],
+                    "dom": "<'card-header border-0 p-0 pt-6'<'card-title' <'d-flex align-items-center position-relative my-1'f> r> <'card-toolbar' <'d-flex justify-content-end add_button4'B> r>>  <'row'l r> <''t><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
+                    lengthMenu: [[10, 25, 50, 100, 250, -1], [10, 25, 50, 100, 250, "الكل"]],
+                    "language": {
+                        search: '',
+                        searchPlaceholder: 'بحث سريع'
                     },
-                    // {extend: 'pdf', className: 'btn btn-raised btn-danger', text: 'PDF'},
-                    {
-                        extend: 'excel',
-                        className: 'btn btn-light-primary me-3',
-                        text: '<i class="bi bi-file-earmark-spreadsheet-fill fs-2x"></i>'
+                    buttons: [
+                        {
+                            extend: 'print',
+                            className: 'btn btn-light-primary me-3',
+                            text: '<i class="bi bi-printer-fill fs-2x"></i>'
+                        },
+                        // {extend: 'pdf', className: 'btn btn-raised btn-danger', text: 'PDF'},
+                        {
+                            extend: 'excel',
+                            className: 'btn btn-light-primary me-3',
+                            text: '<i class="bi bi-file-earmark-spreadsheet-fill fs-2x"></i>'
+                        },
+                        // {extend: 'colvis', className: 'btn secondary', text: 'إظهار / إخفاء الأعمدة '}
+                    ],
+                    ajax: {
+                        url: '{{ route('client.payment.datatable.data',$data->id)}}',
+                        data: {}
                     },
-                    // {extend: 'colvis', className: 'btn secondary', text: 'إظهار / إخفاء الأعمدة '}
-                ],
-                ajax: {
-                    url: '{{ route('client.payment.datatable.data',$data->id)}}',
-                    data: {}
-                },
-                columns: [
-                    {data: 'checkbox', name: 'checkbox', "searchable": false, "orderable": false},
-                    {data: 'date', name: 'date', "searchable": true, "orderable": true},
-                    {data: 'amount', name: 'amount', "searchable": true, "orderable": true},
-                    {data: 'created_at', name: 'created_at', "searchable": true, "orderable": true},
-                    {data: 'actions', name: 'actions', "searchable": true, "orderable": true},
+                    columns: [
+                        {data: 'checkbox', name: 'checkbox', "searchable": false, "orderable": false},
+                        {data: 'date', name: 'date', "searchable": true, "orderable": true},
+                        {data: 'amount', name: 'amount', "searchable": true, "orderable": true},
+                        {data: 'created_at', name: 'created_at', "searchable": true, "orderable": true},
+                        {data: 'actions', name: 'actions', "searchable": true, "orderable": true},
 
-                ]
+                    ]
+                });
+                $.ajax({
+                    url: "{{ URL::to('admin/add-client-payment-button/'.$data->id)}}",
+                    success: function (data) {
+                        $('.add_button4').append(data);
+                    },
+                    dataType: 'html'
+                });
             });
-            $.ajax({
-                url: "{{ URL::to('admin/add-client-payment-button/'.$data->id)}}",
-                success: function (data) {
-                    $('.add_button4').append(data);
-                },
-                dataType: 'html'
-            });
-        });
+
+        }
+
     </script>
     <script type="text/javascript">
-        $(function () {
-            var table = $('#data_table_notification').DataTable({
-                processing: true,
-                serverSide: true,
-                autoWidth: false,
-                responsive: true,
-                aaSorting: [],
-                "dom": "<'card-header border-0 p-0 pt-6'<'card-title' <'d-flex align-items-center position-relative my-1'f> r> <'card-toolbar' <'d-flex justify-content-end add_button5'B> r>>  <'row'l r> <''t><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
-                lengthMenu: [[10, 25, 50, 100, 250, -1], [10, 25, 50, 100, 250, "الكل"]],
-                "language": {
-                    search: '',
-                    searchPlaceholder: 'بحث سريع'
-                },
-                buttons: [
-                    {
-                        extend: 'print',
-                        className: 'btn btn-light-primary me-3',
-                        text: '<i class="bi bi-printer-fill fs-2x"></i>'
+        function notification(){
+            $(function () {
+                var table = $('#data_table_notification').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    autoWidth: false,
+                    responsive: true,
+                    aaSorting: [],
+                    "dom": "<'card-header border-0 p-0 pt-6'<'card-title' <'d-flex align-items-center position-relative my-1'f> r> <'card-toolbar' <'d-flex justify-content-end add_button5'B> r>>  <'row'l r> <''t><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
+                    lengthMenu: [[10, 25, 50, 100, 250, -1], [10, 25, 50, 100, 250, "الكل"]],
+                    "language": {
+                        search: '',
+                        searchPlaceholder: 'بحث سريع'
                     },
-                    // {extend: 'pdf', className: 'btn btn-raised btn-danger', text: 'PDF'},
-                    {
-                        extend: 'excel',
-                        className: 'btn btn-light-primary me-3',
-                        text: '<i class="bi bi-file-earmark-spreadsheet-fill fs-2x"></i>'
+                    buttons: [
+                        {
+                            extend: 'print',
+                            className: 'btn btn-light-primary me-3',
+                            text: '<i class="bi bi-printer-fill fs-2x"></i>'
+                        },
+                        // {extend: 'pdf', className: 'btn btn-raised btn-danger', text: 'PDF'},
+                        {
+                            extend: 'excel',
+                            className: 'btn btn-light-primary me-3',
+                            text: '<i class="bi bi-file-earmark-spreadsheet-fill fs-2x"></i>'
+                        },
+                        // {extend: 'colvis', className: 'btn secondary', text: 'إظهار / إخفاء الأعمدة '}
+                    ],
+                    ajax: {
+                        url: '{{ route('client.notification.datatable.data',$data->id)}}',
+                        data: {}
                     },
-                    // {extend: 'colvis', className: 'btn secondary', text: 'إظهار / إخفاء الأعمدة '}
-                ],
-                ajax: {
-                    url: '{{ route('client.notification.datatable.data',$data->id)}}',
-                    data: {}
-                },
-                columns: [
-                    {data: 'checkbox', name: 'checkbox', "searchable": false, "orderable": false},
-                    {data: 'title', name: 'title', "searchable": true, "orderable": true},
-                    {data: 'body', name: 'body', "searchable": true, "orderable": true},
-                    {data: 'created_at', name: 'created_at', "searchable": true, "orderable": true},
-                    // {data: 'actions', name: 'actions', "searchable": true, "orderable": true},
+                    columns: [
+                        {data: 'checkbox', name: 'checkbox', "searchable": false, "orderable": false},
+                        {data: 'title', name: 'title', "searchable": true, "orderable": true},
+                        {data: 'body', name: 'body', "searchable": true, "orderable": true},
+                        {data: 'created_at', name: 'created_at', "searchable": true, "orderable": true},
+                        // {data: 'actions', name: 'actions', "searchable": true, "orderable": true},
 
-                ]
+                    ]
+                });
+                $.ajax({
+                    url: "{{ URL::to('admin/add-client-notification-button/'.$data->id)}}",
+                    success: function (data) {
+                        $('.add_button5').append(data);
+                    },
+                    dataType: 'html'
+                });
             });
-            $.ajax({
-                url: "{{ URL::to('admin/add-client-notification-button/'.$data->id)}}",
-                success: function (data) {
-                    $('.add_button5').append(data);
-                },
-                dataType: 'html'
-            });
-        });
+        }
+
     </script>
 @endsection
 
