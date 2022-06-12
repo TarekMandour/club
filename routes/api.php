@@ -24,5 +24,6 @@ Route::post('/contact', 'Api\PagesController@Contact');
 Route::get('/categories', 'Api\ClientsController@category');
 Route::get('/sub-categories/{id}', 'Api\ClientsController@SubCategory');
 Route::get('/posts-category/{id}', 'Api\ClientsController@CategoryPostsById');
+Route::get('/mposts-category/{id}/{month}', 'Api\ClientsController@CategoryPostsByMonth');
 Route::get('/post-details/{id}', 'Api\ClientsController@PostDetails');
 Route::get('/offers', 'Api\ClientsController@offers');

@@ -6,7 +6,7 @@
 @endsection
 
 @section('breadcrumb')
-<h1 class="d-flex flex-column text-dark fw-bolder fs-3 mb-0">التصنيفات</h1>
+<h1 class="d-flex flex-column text-dark fw-bolder fs-3 mb-0">الرسائل</h1>
 @endsection
 
 @section('content')
@@ -21,7 +21,7 @@
 
 
                             <!--begin::Form-->
-                            <form id="kt_account_profile_details_form" action="{{url('admin/store-category')}}" class="form"
+                            <form id="kt_account_profile_details_form" action="{{url('admin/store-contact')}}" class="form"
                                   method="post" enctype="multipart/form-data">
                                 @csrf
 
@@ -111,13 +111,13 @@
                                                                         <!--end::Label-->
                                                                         <!--begin::Cancel-->
                                                                         <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="الغاء">
-                                                                            <i class="bi bi-x fs-2"></i>
-                                                                        </span>
+                                                        <i class="bi bi-x fs-2"></i>
+                                                    </span>
                                                                         <!--end::Cancel-->
                                                                         <!--begin::Remove-->
                                                                         <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="حذف">
-                                                                            <i class="bi bi-x fs-2"></i>
-                                                                        </span>
+                                                        <i class="bi bi-x fs-2"></i>
+                                                    </span>
                                                                         <!--end::Remove-->
                                                                     </div>
                                                                     <!--end::Image input-->
@@ -177,7 +177,7 @@
                                     <!--end::Tab content-->
                                     <div class="d-flex justify-content-end">
                                         <!--begin::Button-->
-                                        <a href="{{url('admin/category')}}" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">الغاء</a>
+                                        <a href="{{url('admin/contact')}}" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">الغاء</a>
                                         <!--end::Button-->
                                         <!--begin::Button-->
                                         <button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-primary">

@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\PostResource;
+use App\Http\Resources\PostMonthResource;
 use App\Http\Resources\OffersResource;
 
 class ClientsController extends Controller
@@ -45,6 +46,29 @@ class ClientsController extends Controller
         $results = PostResource::collection($results)->response()->getData(true);
 
         return response(['status' => 200, 'msg' => trans('lang.Successfully_done'), 'data' => $results]);
+
+    }
+
+    public function CategoryPostsByMonth (Request $request) {
+
+        $days = range(1, Carbon::now()->month($request->month)->daysInMonth) ;
+        $results = NULL;
+
+        foreach ($days as $key => $d) {
+            $data = Post::with('postgallery')->where('cat_id', $request->id)->whereDate('created_at', date('Y').'-'.$request->month.'-'.$d)->orderBy('id', 'desc')->get();
+            if ($data ->count() > 0) {
+                $results[] = array(date('Y').'-'.$request->month.'-'.$d => $data ) ;
+            }
+        }
+        
+        // return response(['status' => 200, 'msg' => trans('lang.Successfully_done'), 'data' => $results]);
+        if (isset($results)) {
+            $results = PostMonthResource::collection($results);
+            return response(['status' => 200, 'msg' => trans('lang.Successfully_done'), 'data' => $results]);
+        } else {
+            return response(['status' => 200, 'msg' => trans('lang.Successfully_done'), 'data' => NULL]);
+        }
+
 
     }
 

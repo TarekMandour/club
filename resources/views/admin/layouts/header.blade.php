@@ -3,7 +3,7 @@
     <div class="header-brand">
         <!--begin::Logo-->
         <a href="{{url('/admin')}}">
-            <img alt="Logo" src="{{asset('public/admin/assets/media/logos/logo-1.svg')}}" class="h-25px h-lg-25px" />
+            <img alt="Logo" src="{{$Settings->logo2}}" class="h-25px h-lg-50px" />
         </a>
         <!--end::Logo-->
         <!--begin::Aside minimize-->

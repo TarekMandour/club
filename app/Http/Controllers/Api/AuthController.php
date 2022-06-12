@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Client;
 use Illuminate\Support\Str;
@@ -36,6 +37,10 @@ class AuthController extends Controller
             if (!empty($client)) {
                 if (Hash::check($request->password, $client->password)) {
 
+                    Auth::guard('client')->attempt(['phone' => $client->phone, 'password' => $request->password, 'is_active' => 1],Str::random(10));
+
+                    $client->token = $request->token;
+                    $client->save();
                     return $this->get_profile($client->id);
 
                 } else {

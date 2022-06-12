@@ -6,20 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Client extends Model
+class Client extends Authenticatable
 {
     use Notifiable ;
 
     protected $guard = 'admin';
     protected $guarded = [];
 
-//    protected $fillable = [
-//        'name', 'membership_no ', 'national_no ', 'email', 'phone', 'password', 'photo', 'is_active',
-//        'jop', 'birth_date', 'register_date', 'type', 'parent_id'
-//    ];
+    protected $fillable = [
+        'name', 'membership_no ', 'national_no ', 'email', 'phone', 'password', 'photo', 'is_active',
+        'jop', 'birth_date', 'register_date', 'type', 'parent_id', 'remember_token'
+    ];
 
     protected $hidden = [
-        'password', 'remember_token',
+        'password'
     ];
 
     public function Client()

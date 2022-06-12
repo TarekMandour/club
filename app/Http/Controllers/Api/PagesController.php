@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Page;
 use App\Models\Setting;
 use App\Models\Contact;
+use App\Models\Partner;
 use Illuminate\Http\Request;
+use App\Http\Resources\PartnerResource;
 use Validator;
 
 class PagesController extends Controller
@@ -99,12 +101,9 @@ class PagesController extends Controller
     }
 
     public function clublist(Request $request){
-        $results = Page::find(4);
-        
-        $data['id'] = $results->id;
-        $data['title'] = $results->append_title;
-        $data['content'] = $results->append_content;
+        $results = Partner::orderBy('id', 'asc')->paginate(9);
+        $results = PartnerResource::collection($results)->response()->getData(true);
 
-        return response(['status' => 200, 'msg' => trans('lang.Successfully_done'), 'data' => $data]);
+        return response(['status' => 200, 'msg' => trans('lang.Successfully_done'), 'data' => $results]);
     }
 }

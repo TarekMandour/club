@@ -338,7 +338,7 @@
                     {data: 'name', name: 'name', "searchable": true, "orderable": true},
                     {data: 'phone', name: 'phone', "searchable": true, "orderable": true},
                     {data: 'membership_no', name: 'membership_no', "searchable": true, "orderable": true},
-                    {data: 'job', name: 'job', "searchable": true, "orderable": false},
+                    {data: 'job', name: 'job', "searchable": true, "orderable": true},
                     {data: 'is_active', name: 'is_active', "searchable": false, "orderable": false},
                     {data: 'created_at', name: 'created_at', "searchable": true, "orderable": true},
                     {data: 'actions', name: 'actions', "searchable": false, "orderable": false},

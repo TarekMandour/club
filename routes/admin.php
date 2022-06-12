@@ -17,13 +17,16 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth
     Route::get('/admins', 'AdminController@index');
     Route::get('admins_datatable', 'AdminController@datatable')->name('admins.datatable.data');
     Route::get('delete-admin', 'AdminController@destroy');
-    Route::get('show-admin/{id}', 'AdminController@show');
+    Route::get('show-admin/{id}', 'AdminController@show')->name('admins.show');
     Route::post('store-admin', 'AdminController@store');
     Route::get('edit-admin/{id}', 'AdminController@edit');
     Route::post('update-admin', 'AdminController@update');
     Route::get('add-admin-button', function () {
         return view('admin/admin/button');
     });
+    
+    Route::get('edit-setting', 'SettingController@edit');
+    Route::post('update-setting', 'SettingController@update');
 
     Route::get('/pages', 'PageController@index');
     Route::get('pages_datatable', 'PageController@datatable')->name('pages.datatable.data');
@@ -37,6 +40,28 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth
         return view('admin/page/button');
     });
 
+    Route::get('/slider', 'SliderController@index');
+    Route::get('slider_datatable', 'SliderController@datatable')->name('slider.datatable.data');
+    Route::get('delete-slider', 'SliderController@destroy');
+    Route::get('create-slider', 'SliderController@create');
+    Route::post('store-slider', 'SliderController@store');
+    Route::get('edit-slider/{id}', 'SliderController@edit');
+    Route::post('update-slider', 'SliderController@update');
+    Route::get('add-slider-button', function () {
+        return view('admin/slider/button');
+    });
+
+    Route::get('/partner', 'PartnerController@index');
+    Route::get('partner_datatable', 'PartnerController@datatable')->name('partner.datatable.data');
+    Route::get('delete-partner', 'PartnerController@destroy');
+    Route::get('create-partner', 'PartnerController@create');
+    Route::post('store-partner', 'PartnerController@store');
+    Route::get('edit-partner/{id}', 'PartnerController@edit');
+    Route::post('update-partner', 'PartnerController@update');
+    Route::get('add-partner-button', function () {
+        return view('admin/partner/button');
+    });
+
 //start categories
     Route::get('/category', 'CategoryController@index');
     Route::get('category_datatable', 'CategoryController@datatable')->name('category.datatable.data');
@@ -48,6 +73,19 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth
     Route::post('update-category', 'CategoryController@update');
     Route::get('add-category-button', function () {
         return view('admin/category/button');
+    });
+
+    //start categories
+    Route::get('/contact', 'ContactController@index');
+    Route::get('contact_datatable', 'ContactController@datatable')->name('contact.datatable.data');
+    Route::get('delete-contact', 'ContactController@destroy');
+    Route::get('show-contact/{id}', 'ContactController@show');
+    Route::get('create-contact', 'ContactController@create');
+    Route::post('store-contact', 'ContactController@store');
+    Route::get('edit-contact/{id}', 'ContactController@edit');
+    Route::post('update-contact', 'ContactController@update');
+    Route::get('add-contact-button', function () {
+        return view('admin/contact/button');
     });
 
 //start offers
