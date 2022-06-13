@@ -23,7 +23,8 @@ class AuthController extends Controller
 
         $rule = [
             'username' => 'required',
-            'password' => 'required|min:6'
+            'password' => 'required|min:6',
+
         ];
         $validate = Validator::make($request->all(), $rule);
 
@@ -37,7 +38,7 @@ class AuthController extends Controller
             if (!empty($client)) {
                 if (Hash::check($request->password, $client->password)) {
 
-                    Auth::guard('client')->attempt(['phone' => $client->phone, 'password' => $request->password, 'is_active' => 1],Str::random(10));
+                    Auth::guard('client')->attempt(['phone' => $client->phone, 'password' => $request->password, 'is_active' => 1], Str::random(10));
 
                     $client->token = $request->token;
                     $client->save();
@@ -71,15 +72,17 @@ class AuthController extends Controller
             return response(['status' => 401, 'msg' => $validate->messages()->first(), 'data' => NULL]);
         } else {
 
+            $message = "كود التحقق : " . $request->recode;
 
-            // $ch = curl_init();
-            // $url = "https://www.enjazsms.com/api/sendsms.php";
-            // curl_setopt($ch, CURLOPT_URL, $url);
-            // curl_setopt($ch, CURLOPT_POST, true);
-            // curl_setopt($ch, CURLOPT_POSTFIELDS, "username=fs4host&password=544566&message=كود التحقق : " . $request->recode . "&numbers=" . $request->phone . "&sender=iGold&unicode=E&return=full"); // define what you want to post
-            // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            // $output = curl_exec($ch);
-            // curl_close($ch);
+            $ch = curl_init();
+            $url = "https://smssmartegypt.com/sms/api/";
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, "username=eng.elnader@gmail.com&password=123456&sendername=MSPharmacys&mobiles=" . $request->phone . "&message=" . $message . " "); // define what you want to post
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $output = curl_exec($ch);
+
+            curl_close($ch);
 
             return response(['status' => 200, 'msg' => trans('lang.Successfully_done'), 'data' => NULL]);
 
@@ -166,15 +169,15 @@ class AuthController extends Controller
 
             $old_client = Client::find($request->client_id);
 
-            if ( $img = $request->file('photo') ) {
-                $name = 'img1_' .time() . '.' .$img->getClientOriginalExtension();
+            if ($img = $request->file('photo')) {
+                $name = 'img1_' . time() . '.' . $img->getClientOriginalExtension();
                 $img->move(public_path('uploads/clients'), $name);
                 $photo = $name;
             } else {
                 $photo = $old_client->photo;
             }
 
-            $data = Client::where('id',$request->client_id)->update([
+            $data = Client::where('id', $request->client_id)->update([
                 'photo' => $photo,
             ]);
 
@@ -187,7 +190,7 @@ class AuthController extends Controller
     public function get_profile($id)
     {
 
-        $data = Client::with('Followers','Payments','Debts','Cards','Notifications')->find($id);
+        $data = Client::with('Followers', 'Payments', 'Debts', 'Cards', 'Notifications')->find($id);
 
         if (!$data) {
             return response(['status' => 404, 'msg' => trans('lang.There_are_no_results'), 'data' => NULL]);

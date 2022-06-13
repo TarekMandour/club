@@ -187,6 +187,7 @@ class ClientController extends Controller
 
         ]);
 
+
         $prev = url()->previous();
 
         if (Str::contains($prev, ['edit-client'])) {
@@ -267,7 +268,7 @@ class ClientController extends Controller
         $data->save();
 
 
-        return redirect('admin/edit-client/'.$request->id)->with('message', 'تم التعديل بنجاح')->with('status', 'success');
+        return redirect('admin/edit-client/' . $request->id)->with('message', 'تم التعديل بنجاح')->with('status', 'success');
     }
 
     public function destroy(Request $request)
